@@ -1,9 +1,7 @@
 package com.ms.rocketseat.service.tasks.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.ms.rocketseat.service.tasks.request.TaskRequest;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +9,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "Task")
+@Table(name = "task")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,6 +21,14 @@ public class TasksEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    private String email;
     private LocalDateTime dueDate;
     private boolean notified;
+
+    public TasksEntity(TaskRequest taskRequest) {
+        this.title = taskRequest.title();
+        this.email = taskRequest.email();
+        this.dueDate = taskRequest.dueDate();
+        this.notified = taskRequest.notified();
+    }
 }
